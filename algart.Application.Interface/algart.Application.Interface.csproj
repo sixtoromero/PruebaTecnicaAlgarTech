@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\algart.Application.DTO\algart.Application.DTO.csproj" />
+    <ProjectReference Include="..\algart.Transversal.Common\algart.Transversal.Common.csproj" />
+  </ItemGroup>
+
+</Project>

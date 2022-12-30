@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\algart.Application.Interface\algart.Application.Interface.csproj" />
+    <ProjectReference Include="..\algart.Domain.Interface\algart.Domain.Interface.csproj" />
+  </ItemGroup>
+
+</Project>

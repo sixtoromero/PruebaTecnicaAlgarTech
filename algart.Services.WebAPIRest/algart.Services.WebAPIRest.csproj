@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\algart.Application.Interface\algart.Application.Interface.csproj" />
+    <ProjectReference Include="..\algart.Application.Main\algart.Application.Main.csproj" />
+    <ProjectReference Include="..\algart.Domain.Core\algart.Domain.Core.csproj" />
+    <ProjectReference Include="..\algart.Domain.Entity\algart.Domain.Entity.csproj" />
+    <ProjectReference Include="..\algart.Domain.Interface\algart.Domain.Interface.csproj" />
+    <ProjectReference Include="..\algart.InfraStructure.Data\algart.InfraStructure.Data.csproj" />
+    <ProjectReference Include="..\algart.InfraStructure.Interface\algart.InfraStructure.Interface.csproj" />
+    <ProjectReference Include="..\algart.InfraStructure.Repository\algart.InfraStructure.Repository.csproj" />
+    <ProjectReference Include="..\algart.Transversal.Mapper\algart.Transversal.Mapper.csproj" />
+  </ItemGroup>
+
+
+</Project>
