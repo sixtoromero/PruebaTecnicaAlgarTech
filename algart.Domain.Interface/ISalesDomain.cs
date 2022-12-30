@@ -5,7 +5,8 @@ using System.Text;
 
 namespace algart.Domain.Interface
 {
-    public interface ICategoriasDomain : IDomain<Categorias>
+    public interface ISalesDomain : IDomain<Sale>
     {
+
     }
 }

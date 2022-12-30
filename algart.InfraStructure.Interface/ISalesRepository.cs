@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace algart.InfraStructure.Interface
 {
-    public interface ICategoriasRepository : IRepository<Categorias>
+    public interface ISalesRepository : IRepository<Sale>
     {
 
     }

@@ -11,7 +11,7 @@ namespace algart.Transversal.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<Categorias, CategoriasDTO>().ReverseMap();
+            CreateMap<Sale, SaleDTO>().ReverseMap();
         }
     }
 }

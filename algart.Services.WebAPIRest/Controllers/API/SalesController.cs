@@ -5,31 +5,29 @@ using algart.Transversal.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System;
 
 namespace algart.Services.WebAPIRest.Controllers.API
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class CategoriasController : Controller
+    public class SalesController : Controller
     {
-        private readonly ICategoriasApplication _Application;
+        private readonly ISalesApplication _Application;
         private readonly AppSettings _appSettings;
 
-        public CategoriasController(ICategoriasApplication _Application,
+        public SalesController(ISalesApplication _Application,
                                   IOptions<AppSettings> appSettings)
         {
             this._Application = _Application;
             _appSettings = appSettings.Value;
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> InsertAsync(CategoriasDTO modelDto)
+        public async Task<IActionResult> InsertAsync(SaleDTO modelDto)
         {
             Response<string> response = new Response<string>();
 
@@ -62,7 +60,7 @@ namespace algart.Services.WebAPIRest.Controllers.API
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(CategoriasDTO modelDto)
+        public async Task<IActionResult> UpdateAsync(SaleDTO modelDto)
         {
             Response<string> response = new Response<string>();
 
@@ -130,7 +128,7 @@ namespace algart.Services.WebAPIRest.Controllers.API
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            Response<IEnumerable<CategoriasDTO>> response = new Response<IEnumerable<CategoriasDTO>>();
+            Response<IEnumerable<SaleDTO>> response = new Response<IEnumerable<SaleDTO>>();
 
             try
             {
@@ -158,6 +156,6 @@ namespace algart.Services.WebAPIRest.Controllers.API
             }
         }
 
-
     }
+
 }

@@ -10,29 +10,28 @@ using System.Threading.Tasks;
 
 namespace algart.InfraStructure.Repository
 {
-    public class CategoriasRepository : ICategoriasRepository
+    public class SalesRepository : ISalesRepository
     {
         private readonly IConnectionFactory _connectionFactory;
 
-        public CategoriasRepository(IConnectionFactory connectionFactory)
+        public SalesRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<string> InsertAsync(Categorias model)
+        public async Task<string> InsertAsync(Sale model)
         {
             using (var connection = _connectionFactory.GetConnection)
             {
 
-                var query = "uspCategoriasInsert";
+                var query = "uspSaleInsert";
                 var parameters = new DynamicParameters();
 
-                parameters.Add("Descripcion", model.Descripcion);
+                parameters.Add("Descripcion", model.Description);
 
                 var result = await connection.QuerySingleAsync<string>(query, param: parameters, commandType: CommandType.StoredProcedure);
 
                 return result;
-
             }
         }
 
@@ -40,7 +39,7 @@ namespace algart.InfraStructure.Repository
         {
             using (var connection = _connectionFactory.GetConnection)
             {
-                var query = "uspCategoriasDelete";
+                var query = "uspSaleDelete";
                 var parameters = new DynamicParameters();
 
                 parameters.Add("Id", Id);
@@ -51,18 +50,18 @@ namespace algart.InfraStructure.Repository
             }
         }
 
-        public async Task<IEnumerable<Categorias>> GetAllAsync()
+        public async Task<IEnumerable<Sale>> GetAllAsync()
         {
             using (var connection = _connectionFactory.GetConnection)
             {
-                var query = "UspgetCategorias";
-                var result = await connection.QueryAsync<Categorias>(query, commandType: CommandType.StoredProcedure);
+                var query = "UspgetSale";
+                var result = await connection.QueryAsync<Sale>(query, commandType: CommandType.StoredProcedure);
 
                 return result;
             }
         }
 
-        public async Task<Categorias> GetAsync(int? Id)
+        public async Task<Sale> GetAsync(int? Id)
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -71,20 +70,20 @@ namespace algart.InfraStructure.Repository
 
                 parameters.Add("Id", Id);
 
-                var result = await connection.QuerySingleAsync<Categorias>(query, param: parameters, commandType: CommandType.StoredProcedure);
+                var result = await connection.QuerySingleAsync<Sale>(query, param: parameters, commandType: CommandType.StoredProcedure);
                 return result;
             }
-        }        
+        }
 
-        public async Task<string> UpdateAsync(Categorias model)
+        public async Task<string> UpdateAsync(Sale model)
         {
             using (var connection = _connectionFactory.GetConnection)
             {
-                var query = "uspCategoriasUpdate";
+                var query = "uspSaleUpdate";
                 var parameters = new DynamicParameters();
 
                 parameters.Add("Id", model.Id);
-                parameters.Add("Descripcion", model.Descripcion);
+                //parameters.Add("Descripcion", model.Descripcion);
 
                 var result = await connection.QuerySingleAsync<string>(query, param: parameters, commandType: CommandType.StoredProcedure);
 

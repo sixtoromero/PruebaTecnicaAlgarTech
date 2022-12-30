@@ -11,23 +11,23 @@ using System.Threading.Tasks;
 
 namespace algart.Application.Main
 {
-    public class CategoriasApplication : ICategoriasApplication
+    public class SalesApplication : ISalesApplication
     {
-        private readonly ICategoriasDomain _Domain;
+        private readonly ISalesDomain _Domain;
         private readonly IMapper _mapper;
 
-        public CategoriasApplication(ICategoriasDomain catDomain, IMapper mapper)
+        public SalesApplication(ISalesDomain catDomain, IMapper mapper)
         {
             _Domain = catDomain;
             _mapper = mapper;
-        }        
+        }
 
-        public async Task<Response<string>> InsertAsync(CategoriasDTO modelDto)
+        public async Task<Response<string>> InsertAsync(SaleDTO modelDto)
         {
             var response = new Response<string>();
             try
             {
-                var resp = _mapper.Map<Categorias>(modelDto);
+                var resp = _mapper.Map<Sale>(modelDto);
                 response.Data = await _Domain.InsertAsync(resp);
                 if (response.Data == "Success")
                 {
@@ -45,12 +45,12 @@ namespace algart.Application.Main
             return response;
         }
 
-        public async Task<Response<string>> UpdateAsync(CategoriasDTO modelDto)
+        public async Task<Response<string>> UpdateAsync(SaleDTO modelDto)
         {
             var response = new Response<string>();
             try
             {
-                var resp = _mapper.Map<Categorias>(modelDto);
+                var resp = _mapper.Map<Sale>(modelDto);
                 response.Data = await _Domain.UpdateAsync(resp);
                 if (response.Data == "success")
                 {
@@ -88,14 +88,14 @@ namespace algart.Application.Main
             return response;
         }
 
-        public async Task<Response<CategoriasDTO>> GetAsync(int ID)
+        public async Task<Response<SaleDTO>> GetAsync(int ID)
         {
-            var response = new Response<CategoriasDTO>();
+            var response = new Response<SaleDTO>();
             try
             {
                 var result = await _Domain.GetAsync(ID);
 
-                response.Data = _mapper.Map<CategoriasDTO>(result);
+                response.Data = _mapper.Map<SaleDTO>(result);
                 if (response.Data != null)
                 {
                     response.IsSuccess = true;
@@ -110,14 +110,14 @@ namespace algart.Application.Main
             return response;
         }
 
-        public async Task<Response<IEnumerable<CategoriasDTO>>> GetAllAsync()
+        public async Task<Response<IEnumerable<SaleDTO>>> GetAllAsync()
         {
-            var response = new Response<IEnumerable<CategoriasDTO>>();
+            var response = new Response<IEnumerable<SaleDTO>>();
             try
             {
                 var resp = await _Domain.GetAllAsync();
 
-                response.Data = _mapper.Map<IEnumerable<CategoriasDTO>>(resp);
+                response.Data = _mapper.Map<IEnumerable<SaleDTO>>(resp);
                 if (response.Data != null)
                 {
                     response.IsSuccess = true;
@@ -126,10 +126,10 @@ namespace algart.Application.Main
             }
             catch (Exception ex)
             {
-                response.Message = ex.Message;                
+                response.Message = ex.Message;
             }
 
             return response;
-        }                
+        }
     }
 }

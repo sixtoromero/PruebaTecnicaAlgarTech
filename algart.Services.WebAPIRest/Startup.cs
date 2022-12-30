@@ -73,9 +73,9 @@ namespace algart.Services.WebAPIRest
 
             //Se usa de Scoped o de ámbito porque necesitamos que se instancie una vez por solicitud
 
-            services.AddScoped<ICategoriasApplication, CategoriasApplication>();
-            services.AddScoped<ICategoriasDomain, CategoriasDomain>();
-            services.AddScoped<ICategoriasRepository, CategoriasRepository>();
+            services.AddScoped<ISalesApplication, SalesApplication>();
+            services.AddScoped<ISalesDomain, SalesDomain>();
+            services.AddScoped<ISalesRepository, SalesRepository>();
 
             //var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             //var IsSuer = appSettings.IsSuer;
