@@ -23,6 +23,7 @@ namespace algart.InfraStructure.Repository
         {
             using (var connection = _connectionFactory.GetConnection)
             {
+
                 var query = "uspCategoriasInsert";
                 var parameters = new DynamicParameters();
 
