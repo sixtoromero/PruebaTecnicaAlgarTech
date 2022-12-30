@@ -9,6 +9,7 @@ namespace algart.Application.DTO
         public int Id { get; set; }
         public DateTime? Date { get; set; }
         public int? CustomerId { get; set; }
+        public string? FullName { get; set; }
         public decimal? Total { get; set; }
         public string? Description { get; set; }
         public DateTime? CreatedDate { get; set; }

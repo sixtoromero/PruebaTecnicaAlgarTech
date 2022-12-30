@@ -1,0 +1,67 @@
+﻿var tbOTableSales;
+
+$(document).ready(function () {    
+    ConfigSales();
+});
+
+
+function ConfigSales() {
+    
+    var tb_configSales = [];
+
+    tbOTableSales = jQuery('#tblSales').dataTable({
+        "aaSorting": [[1, "asc"]],
+        'aaData': tb_configSales,
+        "iDisplayLength": 10,
+        "oLanguage": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando desde 0 hasta 0 de 0 registros",
+            "sInfoFiltered": "(filtrado de _MAX_ registros en total)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sPrevious": "",
+                "sNext": ""
+            }
+        }
+    });
+
+    GetSales();
+
+}
+
+function GetSales() {
+
+    var settings = {
+        "url": "http://localhost:9462/api/sales/GetAllAsync",
+        "method": "GET",
+        "timeout": 0,
+    };
+
+    $.ajax(settings).done(function (data) {
+
+        console.log(data)
+
+        tbOTableSales.fnClearTable();
+        
+        for (var x = 0; x < data.Data.length; x++) {            
+            param = data.Data[x].Id + '|' + data.Data[x].Date + '|' + data.Data[x].FullName + '|' + data.Data[x].Total + '|' + data.Data[x].Description;
+            tbOTableSales.fnAddData([data.Data[x].Id,
+                data.Data[x].FullName,
+                data.Data[x].Date,
+                data.Data[x].Total,
+                data.Data[x].Description,
+                '<a class="btn btn-default" href="#"  data-toggle="modal" data-target="#modalSale" onclick="GetUpdateSales(' + "'" + param + "'" + ')" role="button"><img src="../images/update.png" /></a><a class="btn btn-default" href="#"  onclick="DeleteSale(' + "'" + data.Data[x].Id + "'" + ')" role="button"><img src="../images/delete.png" /></a>']);
+        }
+    });
+}
+
+function GetUpdateSales(response) {
+    let resp = response.split('|');
+    $("#modalSale").modal().show();
+    //$("#modalSale").modal({ backdrop: "static" });
+}
+

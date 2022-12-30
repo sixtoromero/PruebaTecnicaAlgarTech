@@ -34,6 +34,11 @@ namespace algart.Application.Main
                     response.IsSuccess = true;
                     response.Message = "Registro Exitoso!";
                 }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = response.Data;
+                }
             }
             catch (Exception ex)
             {

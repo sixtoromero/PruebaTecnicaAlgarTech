@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace algart.InfraStructure.Repository
 {
@@ -27,7 +29,19 @@ namespace algart.InfraStructure.Repository
                 var query = "uspSaleInsert";
                 var parameters = new DynamicParameters();
 
-                parameters.Add("Descripcion", model.Description);
+                var resJson = from sd in model.SaleDetails
+                              select new
+                              {
+                                  ProductId = sd.ProductId,
+                                  Amount = sd.Amount
+                              };
+
+                string json = JsonConvert.SerializeObject(resJson);
+
+                parameters.Add("CustomerId", model.CustomerId);
+                parameters.Add("Total", model.Total);
+                parameters.Add("Description", model.Description);
+                parameters.Add("SaleDetail", json);
 
                 var result = await connection.QuerySingleAsync<string>(query, param: parameters, commandType: CommandType.StoredProcedure);
 
@@ -54,7 +68,7 @@ namespace algart.InfraStructure.Repository
         {
             using (var connection = _connectionFactory.GetConnection)
             {
-                var query = "UspgetSale";
+                var query = "uspGetSales";
                 var result = await connection.QueryAsync<Sale>(query, commandType: CommandType.StoredProcedure);
 
                 return result;
