@@ -34,13 +34,82 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalSaleLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="modalSaleLongTitle">Venta</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                ...
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Cliente</label>
+                            <select class="form-control" id="cboClientes">
+                                <option value="0">SELECCIONE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Total</label>
+                            <input class="form-control" readonly="readonly" type="text" placeholder="Valor Total de la Venta">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Descripción</label>
+                            <textarea class="form-control" id="txtDescripcion" cols="10" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Producto</label>
+                            <select class="form-control" id="cboProductos">
+                                <option value="0">SELECCIONE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Valor</label>
+                            <input id="txtValor" class="form-control" readonly="readonly" type="text" placeholder="Valor del Producto">
+                        </div>
+                    </div>                    
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Color</label>
+                            <input id="txtColor" class="form-control" readonly="readonly" type="text" placeholder="Color del Producto">
+                        </div>
+                    </div>    
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Talla</label>
+                            <input id="txtTalla" class="form-control" readonly="readonly" type="text" placeholder="Talla del Producto">
+                        </div>
+                    </div>    
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Cantidad</label>
+                            <input class="form-control" type="number" placeholder="Cantidad a Vender">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Total Producto</label>
+                            <input class="form-control" readonly="readonly" type="text" placeholder="Total del Producto">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">                            
+                            <label for="exampleInputEmail1">&nbsp;</label><br />
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

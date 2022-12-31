@@ -75,7 +75,15 @@ namespace algart.Services.WebAPIRest
 
             services.AddScoped<ISalesApplication, SalesApplication>();
             services.AddScoped<ISalesDomain, SalesDomain>();
-            services.AddScoped<ISalesRepository, SalesRepository>();
+            services.AddScoped<ISalesRepository, SalesRepository>();      
+            
+            services.AddScoped<IProductApplication, ProductApplication>();
+            services.AddScoped<IProductDomain, ProductDomain>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddScoped<ICustomerApplication, CustomerApplication>();
+            services.AddScoped<ICustomerDomain, CustomerDomain>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             //var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             //var IsSuer = appSettings.IsSuer;

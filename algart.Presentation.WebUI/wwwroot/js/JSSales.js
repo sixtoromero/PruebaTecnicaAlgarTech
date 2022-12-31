@@ -1,6 +1,8 @@
 ﻿var tbOTableSales;
 
 $(document).ready(function () {    
+    GetCustomers();
+    GetProducts();
     ConfigSales();
 });
 
@@ -59,9 +61,50 @@ function GetSales() {
     });
 }
 
+function GetProducts() {
+
+    $("#cboProductos").empty();
+
+    var settings = {
+        "url": "http://localhost:9462/api/product/GetAllAsync",
+        "method": "GET",
+        "timeout": 0,
+    };
+
+    $.ajax(settings).done(function (data) {        
+        $.ajax(settings).done(function (data) {
+            console.log('Productos', data);
+            $("#cboProductos").append("<option  value='-1'>SELECCIONE</option>");
+            for (var x = 0; x < data.Data.length; x++) {
+                $("#cboProductos").append("<option  value=" + data.Data[x].Id + ">" + data.Data[x].Name + "</option>");
+            }
+        });
+    });
+}
+
+function GetCustomers() {
+
+    $("#cboClientes").empty();
+
+    var settings = {
+        "url": "http://localhost:9462/api/customer/GetAllAsync",
+        "method": "GET",
+        "timeout": 0,
+    };
+
+    $.ajax(settings).done(function (data) {
+        console.log('Customer', data);
+        $("#cboClientes").append("<option  value='-1'>SELECCIONE</option>");
+        for (var x = 0; x < data.Data.length; x++) {
+            $("#cboClientes").append("<option  value=" + data.Data[x].Id + ">" + data.Data[x].Names + " " + data.Data[x].Surnames + "</option>");
+        }
+    });
+}
+
+
 function GetUpdateSales(response) {
     let resp = response.split('|');
-    $("#modalSale").modal().show();
-    //$("#modalSale").modal({ backdrop: "static" });
+    //$("#modalSale").modal().show();
+    $("#modalSale").modal({ backdrop: "static" });
 }
 

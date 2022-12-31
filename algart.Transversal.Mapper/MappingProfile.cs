@@ -13,6 +13,8 @@ namespace algart.Transversal.Mapper
         {
             CreateMap<Sale, SaleDTO>().ReverseMap();
             CreateMap<SaleDetail, SaleDetailDTO>().ReverseMap();
+            CreateMap<Customer, CustomerDTO>().ReverseMap();
+            CreateMap<Product, ProductDTO>().ReverseMap();
         }
     }
 }
