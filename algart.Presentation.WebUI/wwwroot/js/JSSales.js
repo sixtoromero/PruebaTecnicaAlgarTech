@@ -1,4 +1,5 @@
 ﻿var tbOTableSales;
+var listProducts;
 
 $(document).ready(function () {    
     GetCustomers();
@@ -45,7 +46,7 @@ function GetSales() {
 
     $.ajax(settings).done(function (data) {
 
-        console.log(data)
+        console.log(data)        
 
         tbOTableSales.fnClearTable();
         
@@ -71,8 +72,12 @@ function GetProducts() {
         "timeout": 0,
     };
 
-    $.ajax(settings).done(function (data) {        
+    $.ajax(settings).done(function (data) {            
+
         $.ajax(settings).done(function (data) {
+
+            listProducts = data.Data;
+
             console.log('Productos', data);
             $("#cboProductos").append("<option  value='-1'>SELECCIONE</option>");
             for (var x = 0; x < data.Data.length; x++) {
@@ -107,4 +112,28 @@ function GetUpdateSales(response) {
     //$("#modalSale").modal().show();
     $("#modalSale").modal({ backdrop: "static" });
 }
+
+function getNewVal(item) {
+    //alert(item.value);        
+    const prod = listProducts.find(p => p.Id === parseInt(item.value));
+    $("#txtValor").val(prod.Price);
+    $("#txtColor").val(prod.Color);
+    $("#txtTalla").val(prod.Size);
+    //$("txtCantidad").val(prod.Size);
+
+    $("#txtCantidad").focus();
+}
+
+function calcProduct() {    
+    const value = parseInt($("#txtCantidad").val());
+    if (value != '') {
+        let total = parseFloat($("#txtValor").val()) * value;
+        $("#txtTotal").val(total)
+    } else {
+        $("#txtTotal").val(0);
+    }
+}
+
+
+    
 

@@ -14,6 +14,8 @@ namespace algart.Domain.Entity
         public int? SalesDepartmentId { get; set; }
         public decimal? Inventory { get; set; }
         public string? Description { get; set; }
+        public string Color { get; set; }
+        public string Size { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? LastModifiedDate { get; set; }
