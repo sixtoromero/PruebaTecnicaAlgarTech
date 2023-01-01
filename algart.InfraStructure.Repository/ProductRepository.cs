@@ -29,5 +29,19 @@ namespace algart.InfraStructure.Repository
                 return result;
             }
         }
+
+        public async Task<IEnumerable<Product>> GetProductsBySaleDepartmentIdAsync(int SalesDepartmentId)
+        {
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var query = "uspGetProductsBySaleDepartmentId";
+                var parameters = new DynamicParameters();
+                parameters.Add("SalesDepartmentId", SalesDepartmentId);
+
+                var result = await connection.QueryAsync<Product>(query, param: parameters, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }            
+        }        
     }
 }

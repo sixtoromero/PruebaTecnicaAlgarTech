@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace algart.Application.Interface
 {
-    public interface IProductApplication
+    public interface ISalesDepartmentApplication
     {
-        Task<Response<IEnumerable<ProductDTO>>> GetAllAsync();
-        Task<Response<IEnumerable<ProductDTO>>> GetProductsBySaleDepartmentIdAsync(int SalesDepartmentId);
+        Task<Response<IEnumerable<SalesDepartmentDTO>>> GetAllAsync();
     }
 }

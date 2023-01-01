@@ -7,7 +7,9 @@ var total = 0;
 
 $(document).ready(function () {    
     GetCustomers();
-    GetProducts();
+    //GetProducts();    
+    GetSaleDepartments();
+
     ConfigProducts();
     ConfigSales();
 
@@ -98,8 +100,10 @@ function GetProducts() {
 
     $("#cboProductos").empty();
 
+    const SalesDepartmentId = parseInt($("#cboDepartamento").val());
+
     var settings = {
-        "url": "http://localhost:9462/api/product/GetAllAsync",
+        "url": "http://localhost:9462/api/product/GetProductsBySaleDepartmentIdAsync?SalesDepartmentId=" + SalesDepartmentId,
         "method": "GET",
         "timeout": 0,
     };
@@ -116,7 +120,7 @@ function GetProducts() {
                 $("#cboProductos").append("<option  value=" + data.Data[x].Id + ">" + data.Data[x].Name + "</option>");
             }
         });
-    });
+    });    
 }
 
 function GetCustomers() {
@@ -308,6 +312,26 @@ function generateSale() {
                 title: 'Oops...',
                 text: 'Ha ocurrido un error inesperado: ' + response.Message
             });
+        }
+    });
+}
+
+function GetSaleDepartments() {
+    
+    $("#cboDepartamento").empty();
+
+    var settings = {
+        "url": "http://localhost:9462/api/SalesDepartment/GetAllAsync",
+        "method": "GET",
+        "timeout": 0,
+    };    
+
+    $.ajax(settings).done(function (data) {
+        debugger;
+        console.log('SaleDepartment', data);
+        $("#cboDepartamento").append("<option  value='-1'>SELECCIONE</option>");
+        for (var x = 0; x < data.Data.length; x++) {
+            $("#cboDepartamento").append("<option  value=" + data.Data[x].Id + ">" + data.Data[x].Department + "</option>");
         }
     });
 }

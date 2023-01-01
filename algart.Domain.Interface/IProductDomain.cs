@@ -9,5 +9,6 @@ namespace algart.Domain.Interface
     public interface IProductDomain
     {
         Task<IEnumerable<Product>> GetAllAsync();
+        Task<IEnumerable<Product>> GetProductsBySaleDepartmentIdAsync(int SalesDepartmentId);
     }
 }

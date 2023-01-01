@@ -85,6 +85,10 @@ namespace algart.Services.WebAPIRest
             services.AddScoped<ICustomerDomain, CustomerDomain>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
 
+            services.AddScoped<ISalesDepartmentApplication, SalesDepartmentApplication>();
+            services.AddScoped<ISalesDepartmentDomain, SalesDepartmentDomain>();
+            services.AddScoped<ISalesDepartmentRepository, SalesDepartmentRepository>();
+
             //var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             //var IsSuer = appSettings.IsSuer;
             //var Audience = appSettings.Audience;

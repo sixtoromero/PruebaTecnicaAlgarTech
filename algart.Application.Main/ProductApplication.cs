@@ -43,6 +43,28 @@ namespace algart.Application.Main
             return response;
         }
 
+        public async Task<Response<IEnumerable<ProductDTO>>> GetProductsBySaleDepartmentIdAsync(int SalesDepartmentId)
+        {
+            var response = new Response<IEnumerable<ProductDTO>>();
+            try
+            {
+                var resp = await _Domain.GetProductsBySaleDepartmentIdAsync(SalesDepartmentId);
+
+                response.Data = _mapper.Map<IEnumerable<ProductDTO>>(resp);
+                if (response.Data != null)
+                {
+                    response.IsSuccess = true;
+                    response.Message = string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
     }
 
 }
