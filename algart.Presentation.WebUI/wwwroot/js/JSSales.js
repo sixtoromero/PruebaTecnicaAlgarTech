@@ -300,6 +300,7 @@ function generateSale() {
             oTableProduct.fnClearTable();
 
             GetProducts();
+            ConfigSales();
 
             Swal.fire({
                 icon: 'success',
@@ -335,3 +336,53 @@ function GetSaleDepartments() {
         }
     });
 }
+
+function DeleteSalse(Id) {
+    Swal.fire({
+        title: 'Está seguro de eliminar la venta seleccionada??',
+        text: "No podrás revertir esto.!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            //Aquí el código para eliminar
+        }
+    });
+}
+
+
+function DeleteSale(Id) {
+    Swal.fire({
+        title: 'Está seguro de eliminar la venta seleccionada??',
+        text: "No podrás revertir esto.!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Eliminar!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            //Aquí el código para eliminar
+            var settings = {
+                "url": "http://localhost:9462/api/sales/DeleteAsync?Id=" + parseInt(Id),
+                "method": "DELETE",
+                "timeout": 0,
+            };
+
+            $.ajax(settings).done(function (response) {
+                GetSales();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registro Eliminado',
+                    text: 'Se ha registrado correctamente la venta.'
+                });
+            });
+        }
+    });
+}
+

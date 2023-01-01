@@ -79,7 +79,7 @@ namespace algart.Application.Main
             try
             {
                 response.Data = await _Domain.DeleteAsync(ID);
-                if (response.Data == "success")
+                if (response.Data == "Success")
                 {
                     response.IsSuccess = true;
                     response.Message = "Eliminación Exitosa!";
