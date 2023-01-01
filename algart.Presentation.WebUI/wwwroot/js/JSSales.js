@@ -9,6 +9,9 @@ $(document).ready(function () {
     GetProducts();
     ConfigProducts();
     ConfigSales();
+
+    $('[data-toggle="tooltip"]').tooltip();   
+
 });
 
 function ConfigSales() {
@@ -149,7 +152,7 @@ function getProduct(item) {
     $("#txtValor").val(prod.Price);
     $("#txtColor").val(prod.Color);
     $("#txtTalla").val(prod.Size);    
-    $("txtCantidad").val('');
+    $("#txtCantidad").val('');
 
     $("#txtCantidad").focus();
 }
@@ -165,6 +168,26 @@ function calcProduct() {
 }
 
 function agregarItem() {
+
+    const ipro = itemsProducts.find(p => p.Id === parseInt($("#cboProductos").val()));
+    if (ipro != undefined) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'El producto ya se encuentra ingresado.!',
+            footer: '<p>Intenta con otro producto</p>'
+        });
+        return;
+    }
+
+    if ($("#txtCantidad").val() == '' || parseInt($("#cboProductos").val()) == -1) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Algunos campos son obligatorios'
+        });
+        return;
+    }
 
     const prod = listProducts.find(p => p.Id === parseInt($("#cboProductos").val()));
     const totalProd = parseFloat(prod.Price) * parseInt($("#txtCantidad").val());
@@ -185,12 +208,18 @@ function agregarItem() {
         total = total + itemsProducts[x].Total;
         oTableProduct.fnAddData([itemsProducts[x].Name,
             itemsProducts[x].Price,
-            itemsProducts[x].Amount,            
+            itemsProducts[x].Amount,
             itemsProducts[x].Total,
             '<input id="e' + itemsProducts[x].Id + '" type="button" value="quitar" onclick="removeItem(' + "'" + itemsProducts[x].Id + "'" + ')"/>']);
     }
 
     $("#totalVenta").text(total);
+
+    $("#txtValor").val('');
+    $("#txtColor").val('');
+    $("#txtTalla").val('');
+    $("#txtCantidad").val('');
+    $("#cboProductos").val('-1');
 
 }
 
