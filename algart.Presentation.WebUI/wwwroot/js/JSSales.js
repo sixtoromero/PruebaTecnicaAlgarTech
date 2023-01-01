@@ -3,6 +3,7 @@ var oTableProduct;
 
 var listProducts;
 var itemsProducts = [];
+var total = 0;
 
 $(document).ready(function () {    
     GetCustomers();
@@ -190,8 +191,7 @@ function agregarItem() {
     }
 
     const prod = listProducts.find(p => p.Id === parseInt($("#cboProductos").val()));
-    const totalProd = parseFloat(prod.Price) * parseInt($("#txtCantidad").val());
-    let total = 0;
+    const totalProd = parseFloat(prod.Price) * parseInt($("#txtCantidad").val());    
 
     let newItem = {
         Id: prod.Id,
@@ -223,6 +223,72 @@ function agregarItem() {
 
 }
 
+function generateSale() {
 
-    
+    if (itemsProducts.length == 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Debe agregar un item por lo menos, para generar la venta. Intente nuevamente por favor.'
+        });
+        return;
+    }
 
+    if (parseInt($("#cboClientes").val()) == -1) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Algunos campos son obligatorios'
+        });
+        return;
+    }
+
+    let detail = []
+
+    for (var x = 0; x < itemsProducts.length; x++) {
+        let items = {
+            Id: 0,
+            SaleId: 0,
+            ProductId: itemsProducts[x].Id,
+            Amount: itemsProducts[x].Amount
+        };
+        detail.push(items);
+    }
+
+    let newSale = {
+        Id: 0,
+        CustomerId: $("#cboClientes").val(),
+        Total: total,
+        Description: $("#txtDescripcion").val(),
+        SaleDetails: detail
+    };
+
+    debugger;
+
+    var settings = {
+        "url": "http://localhost:9462/api/sales/InsertAsync",
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "data": JSON.stringify(newSale),
+    };
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        if (response.data.IsSuccess) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Felicidades',
+                text: 'Se ha registrado correctamente la venta.'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ha ocurrido un error inesperado: ' + response.data.Message
+            });
+        }
+    });
+}
