@@ -153,6 +153,7 @@ function getProduct(item) {
     $("#txtValor").val(prod.Price);
     $("#txtColor").val(prod.Color);
     $("#txtTalla").val(prod.Size);    
+    $("#txtInventario").val(prod.Inventory);
     $("#txtCantidad").val('');
 
     $("#txtCantidad").focus();
@@ -171,6 +172,7 @@ function calcProduct() {
 function agregarItem() {
 
     const ipro = itemsProducts.find(p => p.Id === parseInt($("#cboProductos").val()));
+
     if (ipro != undefined) {
         Swal.fire({
             icon: 'warning',
@@ -186,6 +188,16 @@ function agregarItem() {
             icon: 'warning',
             title: 'Oops...',
             text: 'Algunos campos son obligatorios'
+        });
+        return;
+    }
+
+    const iprod = listProducts.find(p => p.Id === parseInt($("#cboProductos").val()));
+    if (parseInt($("#txtCantidad").val()) > iprod.Inventory) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Inventario del producto no disponible'
         });
         return;
     }
@@ -282,6 +294,8 @@ function generateSale() {
 
             itemsProducts = [];
             oTableProduct.fnClearTable();
+
+            GetProducts();
 
             Swal.fire({
                 icon: 'success',
