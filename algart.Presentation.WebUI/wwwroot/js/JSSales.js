@@ -261,9 +261,7 @@ function generateSale() {
         Total: total,
         Description: $("#txtDescripcion").val(),
         SaleDetails: detail
-    };
-
-    debugger;
+    };    
 
     var settings = {
         "url": "http://localhost:9462/api/sales/InsertAsync",
@@ -277,7 +275,14 @@ function generateSale() {
 
     $.ajax(settings).done(function (response) {
         console.log(response);
-        if (response.data.IsSuccess) {
+        if (response.IsSuccess) {
+
+            $("#cboClientes").val(-1);
+            $("#txtDescripcion").val('');
+
+            itemsProducts = [];
+            oTableProduct.fnClearTable();
+
             Swal.fire({
                 icon: 'success',
                 title: 'Felicidades',
@@ -287,7 +292,7 @@ function generateSale() {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Ha ocurrido un error inesperado: ' + response.data.Message
+                text: 'Ha ocurrido un error inesperado: ' + response.Message
             });
         }
     });
