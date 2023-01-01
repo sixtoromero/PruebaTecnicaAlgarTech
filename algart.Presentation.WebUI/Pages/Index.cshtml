@@ -63,7 +63,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Producto</label>
-                        <select onchange="getNewVal(this);" class="form-control" id="cboProductos">
+                        <select onchange="getProduct(this);" class="form-control" id="cboProductos">
                             <option value="0">SELECCIONE</option>
                         </select>
                     </div>
@@ -101,7 +101,7 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">&nbsp;</label><br />
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" onclick="agregarItem();">
                             <i class="fas fa-plus"></i> Agregar
                         </button>
                     </div>
@@ -109,36 +109,21 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <table class="table">
+                    <table class="table" id="items" style="width:100%;">
                         <thead>
                             <tr>
                                 <th>Nombre Producto</th>
                                 <th>Valor</th>
-                                <th>Cantidad Total Producto</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Producto 1</td>
-                                <td>$10</td>
-                                <td>2</td>
-                                <td>
-                                    <button class="btn btn-danger">Eliminar</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Producto 2</td>
-                                <td>$20</td>
-                                <td>1</td>
-                                <td>
-                                    <button class="btn btn-danger">Eliminar</button>
-                                </td>
-                            </tr>
+                        <tbody>                            
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4">Total: $50</td>
+                                <td colspan="4">Total: <label id="totalVenta"></label></td>
                             </tr>
                         </tfoot>
                     </table>

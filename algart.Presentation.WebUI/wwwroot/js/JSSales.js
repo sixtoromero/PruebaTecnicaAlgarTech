@@ -1,12 +1,15 @@
 ﻿var tbOTableSales;
+var oTableProduct;
+
 var listProducts;
+var itemsProducts = [];
 
 $(document).ready(function () {    
     GetCustomers();
     GetProducts();
+    ConfigProducts();
     ConfigSales();
 });
-
 
 function ConfigSales() {
     
@@ -34,6 +37,31 @@ function ConfigSales() {
 
     GetSales();
 
+}
+
+function ConfigProducts() {
+    
+    var tb_configProducts = [];
+
+    oTableProduct = jQuery('#items').dataTable({
+        "aaSorting": [[1, "asc"]],
+        'aaData': tb_configProducts,
+        "iDisplayLength": 10,
+        "oLanguage": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sInfo": "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando desde 0 hasta 0 de 0 registros",
+            "sInfoFiltered": "(filtrado de _MAX_ registros en total)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sPrevious": "",
+                "sNext": ""
+            }
+        }
+    });
 }
 
 function GetSales() {
@@ -113,13 +141,15 @@ function GetUpdateSales(response) {
     $("#modalSale").modal({ backdrop: "static" });
 }
 
-function getNewVal(item) {
+function getProduct(item) {
     //alert(item.value);        
+    
     const prod = listProducts.find(p => p.Id === parseInt(item.value));
+
     $("#txtValor").val(prod.Price);
     $("#txtColor").val(prod.Color);
-    $("#txtTalla").val(prod.Size);
-    //$("txtCantidad").val(prod.Size);
+    $("#txtTalla").val(prod.Size);    
+    $("txtCantidad").val('');
 
     $("#txtCantidad").focus();
 }
@@ -132,6 +162,36 @@ function calcProduct() {
     } else {
         $("#txtTotal").val(0);
     }
+}
+
+function agregarItem() {
+
+    const prod = listProducts.find(p => p.Id === parseInt($("#cboProductos").val()));
+    const totalProd = parseFloat(prod.Price) * parseInt($("#txtCantidad").val());
+    let total = 0;
+
+    let newItem = {
+        Id: prod.Id,
+        Name: prod.Name,
+        Price: prod.Price,
+        Amount: parseInt($("#txtCantidad").val()),
+        Total: totalProd,
+    };
+
+    itemsProducts.push(newItem);
+
+    oTableProduct.fnClearTable();
+    for (var x = 0; x < itemsProducts.length; x++) {
+        total = total + itemsProducts[x].Total;
+        oTableProduct.fnAddData([itemsProducts[x].Name,
+            itemsProducts[x].Price,
+            itemsProducts[x].Amount,            
+            itemsProducts[x].Total,
+            '<input id="e' + itemsProducts[x].Id + '" type="button" value="quitar" onclick="removeItem(' + "'" + itemsProducts[x].Id + "'" + ')"/>']);
+    }
+
+    $("#totalVenta").text(total);
+
 }
 
 
