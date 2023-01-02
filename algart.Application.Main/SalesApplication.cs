@@ -57,7 +57,7 @@ namespace algart.Application.Main
             {
                 var resp = _mapper.Map<Sale>(modelDto);
                 response.Data = await _Domain.UpdateAsync(resp);
-                if (response.Data == "success")
+                if (response.Data == "Success")
                 {
                     response.IsSuccess = true;
                     response.Message = "Registro Exitoso!";

@@ -148,6 +148,7 @@ function GetCustomers() {
 
 function GetUpdateSales(response) {
 
+    
     const isale = listSale.find(p => p.Id === parseInt(response));
     
     $("#cboClientes").val(isale.CustomerId);
@@ -162,8 +163,8 @@ function GetUpdateSales(response) {
         oTableProduct.fnAddData([itemsProducts[x].Name,
         itemsProducts[x].Price,
         itemsProducts[x].Amount,
-        itemsProducts[x].Total,
-        '<input id="e' + itemsProducts[x].Id + '" type="button" value="quitar" onclick="removeItem(' + "'" + itemsProducts[x].Id + "'" + ')"/>']);
+            itemsProducts[x].Total,
+            '<input id="e' + itemsProducts[x].Id + '" type="button" value="quitar" onclick="removeItem(' + "'" + itemsProducts[x].ProductId + "'" + ')"/>']);
     }
 
 
@@ -258,7 +259,7 @@ function agregarItem() {
             itemsProducts[x].Price,
             itemsProducts[x].Amount,
             itemsProducts[x].Total,
-            '<input id="e' + itemsProducts[x].Id + '" type="button" value="quitar" onclick="removeItem(' + "'" + itemsProducts[x].ProductId + "'" + ')"/>']);
+            '<input id="e' + itemsProducts[x].ProductId + '" type="button" value="quitar" onclick="removeItem(' + "'" + itemsProducts[x].ProductId + "'" + ')"/>']);
     }
 
     $("#totalVenta").text(total);
@@ -273,6 +274,23 @@ function agregarItem() {
     $("#cboProductos").val('-1');
 
     console.log('Items Agregados', itemsProducts);
+}
+
+function generate() {
+    Swal.fire({
+        title: 'Está seguro de generar la venta?',
+        text: "Recuerde que al generar la venta afecta el inventario de los productos!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Generar Venta!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            generateSale();
+        }
+    });
 }
 
 function generateSale() {
@@ -345,7 +363,9 @@ function generateSale() {
     }
 
     $.ajax(settings).done(function (response) {
+        
         console.log(response);
+
         if (response.IsSuccess) {
 
             $("#cboClientes").val(-1);
@@ -442,7 +462,45 @@ function cleanScreen() {
     $("#txtCantidad").val('');
     $("#txtInventario").val('');
     $("#txtTotal").val('');
+    $("#txtDescripcion").val('');
     $("#totalVenta").text('0');
+    $("#cboClientes").val(-1);
     $("#cboDepartamento").val(-1);
+}
+
+function removeItem(productId) {
+    Swal.fire({
+        title: 'Está seguro de eliminar el producto agregado?',
+        text: "podrás volverlo a incluir.!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Eliminar!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            //Aquí el código para eliminar            
+            for (let i = 0; i < itemsProducts.length; i++) {
+                if (itemsProducts[i].ProductId === parseInt(productId)) {
+                    itemsProducts.splice(i, 1);
+                    break;
+                }
+            }
+
+            oTableProduct.fnClearTable();
+            total = 0;
+            for (var x = 0; x < itemsProducts.length; x++) {
+                total = total + itemsProducts[x].Total;
+                oTableProduct.fnAddData([itemsProducts[x].Name,
+                itemsProducts[x].Price,
+                itemsProducts[x].Amount,
+                itemsProducts[x].Total,
+                '<input id="e' + itemsProducts[x].ProductId + '" type="button" value="quitar" onclick="removeItem(' + "'" + itemsProducts[x].ProductId + "'" + ')"/>']);
+            }
+
+            $("#totalVenta").text(total);
+        }
+    });
 }
 
