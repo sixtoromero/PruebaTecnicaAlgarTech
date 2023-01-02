@@ -107,10 +107,22 @@ namespace algart.InfraStructure.Repository
                 var query = "uspSaleUpdate";
                 var parameters = new DynamicParameters();
 
-                parameters.Add("Id", model.Id);
-                //parameters.Add("Descripcion", model.Descripcion);
+                var resJson = from sd in model.SaleDetails
+                              select new
+                              {
+                                  ProductId = sd.ProductId,
+                                  Amount = sd.Amount
+                              };
 
-                var result = await connection.QuerySingleAsync<string>(query, param: parameters, commandType: CommandType.StoredProcedure);
+                string json = JsonConvert.SerializeObject(resJson);
+
+                parameters.Add("Id", model.Id);
+                parameters.Add("CustomerId", model.CustomerId);
+                parameters.Add("Total", model.Total);
+                parameters.Add("Description", model.Description);
+                parameters.Add("SaleDetail", json);
+
+                var result = await connection.QuerySingleAsync<string>(query, param: parameters, commandType: CommandType.StoredProcedure);                
 
                 return result;
             }

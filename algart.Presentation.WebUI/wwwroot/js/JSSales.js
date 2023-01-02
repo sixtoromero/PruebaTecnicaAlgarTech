@@ -166,6 +166,9 @@ function GetUpdateSales(response) {
         '<input id="e' + itemsProducts[x].Id + '" type="button" value="quitar" onclick="removeItem(' + "'" + itemsProducts[x].Id + "'" + ')"/>']);
     }
 
+
+    $("#txtSaleId").val(isale.Id);
+
     $('.nav-tabs a[href="#crear"]').tab('show');
 
     //$("#modalSale").modal().show();
@@ -232,8 +235,7 @@ function agregarItem() {
         });
         return;
     }
-
-    debugger;
+    
     const prod = listProducts.find(p => p.Id === parseInt($("#cboProductos").val()));
     const totalProd = parseFloat(prod.Price) * parseInt($("#txtCantidad").val());    
 
@@ -270,6 +272,7 @@ function agregarItem() {
 
     $("#cboProductos").val('-1');
 
+    console.log('Items Agregados', itemsProducts);
 }
 
 function generateSale() {
@@ -305,22 +308,41 @@ function generateSale() {
     }
 
     let newSale = {
-        Id: 0,
+        Id: parseInt($("#txtSaleId").val()),
         CustomerId: $("#cboClientes").val(),
         Total: total,
         Description: $("#txtDescripcion").val(),
         SaleDetails: detail
     };    
+    var settings;
 
-    var settings = {
-        "url": "http://localhost:9462/api/sales/InsertAsync",
-        "method": "POST",
-        "timeout": 0,
-        "headers": {
-            "Content-Type": "application/json"
-        },
-        "data": JSON.stringify(newSale),
-    };
+    if ($("#txtSaleId").val() == "0") {
+        settings = {
+            "url": "http://localhost:9462/api/sales/InsertAsync",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify(newSale),
+        };
+    }else {
+        settings = {
+            "url": "http://localhost:9462/api/sales/UpdateAsync",
+            "method": "PUT",
+            "timeout": 0,
+        };
+
+        var settings = {
+            "url": "http://localhost:9462/api/sales/UpdateAsync",
+            "method": "PUT",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify(newSale),
+        };
+    }
 
     $.ajax(settings).done(function (response) {
         console.log(response);
@@ -341,6 +363,9 @@ function generateSale() {
                 title: 'Felicidades',
                 text: 'Se ha registrado correctamente la venta.'
             });
+
+            cleanScreen();
+
         } else {
             Swal.fire({
                 icon: 'error',
@@ -401,5 +426,23 @@ function DeleteSale(Id) {
             });
         }
     });
+}
+
+function cleanScreen() {
+    itemsProducts = [];
+    listSale = [];
+    
+    oTableProduct.fnClearTable();
+    
+    $("#cboProductos").empty();
+
+    $("#txtValor").val('');
+    $("#txtColor").val('');
+    $("#txtTalla").val('');
+    $("#txtCantidad").val('');
+    $("#txtInventario").val('');
+    $("#txtTotal").val('');
+    $("#totalVenta").text('0');
+    $("#cboDepartamento").val(-1);
 }
 
