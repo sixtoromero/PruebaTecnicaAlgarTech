@@ -71,6 +71,17 @@ namespace algart.InfraStructure.Repository
                 var query = "uspGetSales";
                 var result = await connection.QueryAsync<Sale>(query, commandType: CommandType.StoredProcedure);
 
+                foreach (var item in result)
+                {
+                    query = "uspGetSalesDetail";
+                    var parameters = new DynamicParameters();
+                    parameters.Add("SaleId", item.Id);
+
+                    var resp = await connection.QueryAsync<SaleDetail>(query, param: parameters, commandType: CommandType.StoredProcedure);
+                    item.SaleDetails = resp;
+
+                }
+
                 return result;
             }
         }

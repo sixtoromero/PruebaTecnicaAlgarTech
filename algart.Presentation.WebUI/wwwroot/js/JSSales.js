@@ -3,6 +3,8 @@ var oTableProduct;
 
 var listProducts;
 var itemsProducts = [];
+var listSale = [];
+
 var total = 0;
 
 $(document).ready(function () {    
@@ -81,17 +83,18 @@ function GetSales() {
     $.ajax(settings).done(function (data) {
 
         console.log(data)        
+        listSale = data.Data;
 
         tbOTableSales.fnClearTable();
         
         for (var x = 0; x < data.Data.length; x++) {            
-            param = data.Data[x].Id + '|' + data.Data[x].Date + '|' + data.Data[x].FullName + '|' + data.Data[x].Total + '|' + data.Data[x].Description;
+            param = data.Data[x].Id; // + '|' + data.Data[x].CustomerId + '|' + data.Data[x].FullName + '|' + data.Data[x].Total + '|' + data.Data[x].Description;
             tbOTableSales.fnAddData([data.Data[x].Id,
                 data.Data[x].FullName,
                 data.Data[x].Date,
                 data.Data[x].Total,
                 data.Data[x].Description,
-                '<a class="btn btn-default" href="#"  data-toggle="modal" data-target="#modalSale" onclick="GetUpdateSales(' + "'" + param + "'" + ')" role="button"><img src="../images/update.png" /></a><a class="btn btn-default" href="#"  onclick="DeleteSale(' + "'" + data.Data[x].Id + "'" + ')" role="button"><img src="../images/delete.png" /></a>']);
+                '<a class="btn btn-default" href="#" onclick="GetUpdateSales(' + "'" + param + "'" + ')" role="button"><img src="../images/update.png" /></a><a class="btn btn-default" href="#"  onclick="DeleteSale(' + "'" + data.Data[x].Id + "'" + ')" role="button"><img src="../images/delete.png" /></a>']);
         }
     });
 }
@@ -134,7 +137,7 @@ function GetCustomers() {
     };
 
     $.ajax(settings).done(function (data) {
-        console.log('Customer', data);
+        console.log('Customer', data);        
         $("#cboClientes").append("<option  value='-1'>SELECCIONE</option>");
         for (var x = 0; x < data.Data.length; x++) {
             $("#cboClientes").append("<option  value=" + data.Data[x].Id + ">" + data.Data[x].Names + " " + data.Data[x].Surnames + "</option>");
@@ -144,9 +147,33 @@ function GetCustomers() {
 
 
 function GetUpdateSales(response) {
-    let resp = response.split('|');
+
+    const isale = listSale.find(p => p.Id === parseInt(response));
+    
+    $("#cboClientes").val(isale.CustomerId);
+    $("#txtDescripcion").val(isale.Description);
+    $("#totalVenta").text(isale.Total);
+
+    itemsProducts = isale.SaleDetails;
+    
+    oTableProduct.fnClearTable();
+    for (var x = 0; x < itemsProducts.length; x++) {
+        total = total + itemsProducts[x].Total;
+        oTableProduct.fnAddData([itemsProducts[x].Name,
+        itemsProducts[x].Price,
+        itemsProducts[x].Amount,
+        itemsProducts[x].Total,
+        '<input id="e' + itemsProducts[x].Id + '" type="button" value="quitar" onclick="removeItem(' + "'" + itemsProducts[x].Id + "'" + ')"/>']);
+    }
+
+    $('.nav-tabs a[href="#crear"]').tab('show');
+
     //$("#modalSale").modal().show();
-    $("#modalSale").modal({ backdrop: "static" });
+    //$("#modalSale").modal({ backdrop: "static" });
+
+    //Llenar itemsProducts de la venta seleccionada
+    //Consultar el cliente de listCustomer
+
 }
 
 function getProduct(item) {
@@ -174,8 +201,8 @@ function calcProduct() {
 }
 
 function agregarItem() {
-
-    const ipro = itemsProducts.find(p => p.Id === parseInt($("#cboProductos").val()));
+    
+    const ipro = itemsProducts.find(p => p.ProductId === parseInt($("#cboProductos").val()));
 
     if (ipro != undefined) {
         Swal.fire({
@@ -206,11 +233,13 @@ function agregarItem() {
         return;
     }
 
+    debugger;
     const prod = listProducts.find(p => p.Id === parseInt($("#cboProductos").val()));
     const totalProd = parseFloat(prod.Price) * parseInt($("#txtCantidad").val());    
 
     let newItem = {
-        Id: prod.Id,
+        Id: 0,
+        ProductId: prod.Id,
         Name: prod.Name,
         Price: prod.Price,
         Amount: parseInt($("#txtCantidad").val()),
@@ -220,13 +249,14 @@ function agregarItem() {
     itemsProducts.push(newItem);
 
     oTableProduct.fnClearTable();
+    total = 0;
     for (var x = 0; x < itemsProducts.length; x++) {
         total = total + itemsProducts[x].Total;
         oTableProduct.fnAddData([itemsProducts[x].Name,
             itemsProducts[x].Price,
             itemsProducts[x].Amount,
             itemsProducts[x].Total,
-            '<input id="e' + itemsProducts[x].Id + '" type="button" value="quitar" onclick="removeItem(' + "'" + itemsProducts[x].Id + "'" + ')"/>']);
+            '<input id="e' + itemsProducts[x].Id + '" type="button" value="quitar" onclick="removeItem(' + "'" + itemsProducts[x].ProductId + "'" + ')"/>']);
     }
 
     $("#totalVenta").text(total);
@@ -235,6 +265,9 @@ function agregarItem() {
     $("#txtColor").val('');
     $("#txtTalla").val('');
     $("#txtCantidad").val('');
+    $("#txtInventario").val('');
+    $("#txtTotal").val('');
+
     $("#cboProductos").val('-1');
 
 }
@@ -265,7 +298,7 @@ function generateSale() {
         let items = {
             Id: 0,
             SaleId: 0,
-            ProductId: itemsProducts[x].Id,
+            ProductId: itemsProducts[x].ProductId,
             Amount: itemsProducts[x].Amount
         };
         detail.push(items);
@@ -300,7 +333,8 @@ function generateSale() {
             oTableProduct.fnClearTable();
 
             GetProducts();
-            ConfigSales();
+            GetSales();
+            //ConfigSales();
 
             Swal.fire({
                 icon: 'success',
@@ -328,7 +362,7 @@ function GetSaleDepartments() {
     };    
 
     $.ajax(settings).done(function (data) {
-        debugger;
+        
         console.log('SaleDepartment', data);
         $("#cboDepartamento").append("<option  value='-1'>SELECCIONE</option>");
         for (var x = 0; x < data.Data.length; x++) {
@@ -336,23 +370,6 @@ function GetSaleDepartments() {
         }
     });
 }
-
-function DeleteSalse(Id) {
-    Swal.fire({
-        title: 'Está seguro de eliminar la venta seleccionada??',
-        text: "No podrás revertir esto.!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            //Aquí el código para eliminar
-        }
-    });
-}
-
 
 function DeleteSale(Id) {
     Swal.fire({

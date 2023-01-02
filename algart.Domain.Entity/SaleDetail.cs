@@ -9,7 +9,10 @@ namespace algart.Domain.Entity
         public int Id { get; set; }
         public int? SaleId { get; set; }
         public int? ProductId { get; set; }
+        public string Name { get; set; }
         public decimal? Amount { get; set; }
+        public decimal? Price { get; set; }
+        public decimal? Total { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? LastModifiedDate { get; set; }
