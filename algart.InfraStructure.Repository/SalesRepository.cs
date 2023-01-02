@@ -41,6 +41,8 @@ namespace algart.InfraStructure.Repository
                 parameters.Add("CustomerId", model.CustomerId);
                 parameters.Add("Total", model.Total);
                 parameters.Add("Description", model.Description);
+                parameters.Add("IsSeparatePlan", model.IsSeparatePlan);
+                parameters.Add("PlanSeparateId", model.PlanSeparateId);
                 parameters.Add("SaleDetail", json);
 
                 var result = await connection.QuerySingleAsync<string>(query, param: parameters, commandType: CommandType.StoredProcedure);
@@ -120,6 +122,8 @@ namespace algart.InfraStructure.Repository
                 parameters.Add("CustomerId", model.CustomerId);
                 parameters.Add("Total", model.Total);
                 parameters.Add("Description", model.Description);
+                parameters.Add("IsSeparatePlan", model.IsSeparatePlan);
+                parameters.Add("PlanSeparateId", model.PlanSeparateId);
                 parameters.Add("SaleDetail", json);
 
                 var result = await connection.QuerySingleAsync<string>(query, param: parameters, commandType: CommandType.StoredProcedure);                

@@ -14,6 +14,7 @@ $(document).ready(function () {
 
     ConfigProducts();
     ConfigSales();
+    GetPlanSepare();
 
     $('[data-toggle="tooltip"]').tooltip();   
 
@@ -82,7 +83,7 @@ function GetSales() {
 
     $.ajax(settings).done(function (data) {
 
-        console.log(data)        
+        console.log(data);    
         listSale = data.Data;
 
         tbOTableSales.fnClearTable();
@@ -153,6 +154,7 @@ function GetUpdateSales(response) {
     
     $("#cboClientes").val(isale.CustomerId);
     $("#txtDescripcion").val(isale.Description);
+    $("#cboPlanSepare").val(isale.PlanSeparateId);
     $("#totalVenta").text(isale.Total);
 
     itemsProducts = isale.SaleDetails;
@@ -277,6 +279,7 @@ function agregarItem() {
 }
 
 function generate() {
+
     Swal.fire({
         title: 'Está seguro de generar la venta?',
         text: "Recuerde que al generar la venta afecta el inventario de los productos!",
@@ -320,16 +323,25 @@ function generateSale() {
             Id: 0,
             SaleId: 0,
             ProductId: itemsProducts[x].ProductId,
-            Amount: itemsProducts[x].Amount
+            Amount: itemsProducts[x].Amount            
         };
         detail.push(items);
     }
+
+    debugger;
+    let isPlanSepare = false;
+    if (parseInt($("#cboPlanSepare").val()) > 0) {
+        isPlanSepare = total >= parseFloat($("#txtSepare").val()) ? true : false;
+    }
+        
 
     let newSale = {
         Id: parseInt($("#txtSaleId").val()),
         CustomerId: $("#cboClientes").val(),
         Total: total,
         Description: $("#txtDescripcion").val(),
+        IsSeparatePlan: isPlanSepare,
+        PlanSeparateId: $("#cboPlanSepare").val(),
         SaleDetails: detail
     };    
     var settings;
@@ -466,6 +478,7 @@ function cleanScreen() {
     $("#totalVenta").text('0');
     $("#cboClientes").val(-1);
     $("#cboDepartamento").val(-1);
+    $("#cboPlanSepare").val(0);
 }
 
 function removeItem(productId) {
@@ -500,6 +513,24 @@ function removeItem(productId) {
             }
 
             $("#totalVenta").text(total);
+        }
+    });
+}
+
+function GetPlanSepare() {
+
+    $("#cboPlanSepare").empty();
+
+    var settings = {
+        "url": "http://localhost:9462/api/PlanSeparate/GetAllAsync",
+        "method": "GET",
+        "timeout": 0,
+    };
+
+    $.ajax(settings).done(function (data) {
+        $("#cboPlanSepare").append("<option  value='0'>SELECCIONE</option>");
+        for (var x = 0; x < data.Data.length; x++) {
+            $("#cboPlanSepare").append("<option  value=" + data.Data[x].Id + ">" + data.Data[x].Description + "</option>");
         }
     });
 }

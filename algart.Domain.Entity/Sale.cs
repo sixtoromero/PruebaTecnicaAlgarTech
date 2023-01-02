@@ -12,6 +12,8 @@ namespace algart.Domain.Entity
         public string? FullName { get; set; }
         public decimal? Total { get; set; }
         public string? Description { get; set; }
+        public bool IsSeparatePlan { get; set; }
+        public int PlanSeparateId { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? LastModifiedDate { get; set; }

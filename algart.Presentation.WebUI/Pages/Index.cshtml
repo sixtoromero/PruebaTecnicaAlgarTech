@@ -15,6 +15,9 @@
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#crear">Nuevo Medido</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#separe">Ajustes</a>
+    </li>
 </ul>
 
 <div class="tab-content">
@@ -63,17 +66,25 @@
         <div class="row align-items-center">
             <div class="col-6">
                 <div class="form-group">
-                    <label for="cboProductos">Departamento de Ventas</label>
-                    <select onchange="GetProducts();" class="form-control" id="cboDepartamento">
-                        <option value="0">SELECCIONE</option>
+                    <label for="cboProductos">¿Plan separe?</label>
+                    <select class="form-control" id="cboPlanSepare">
+                        <option value="-1">--SELECCIONE--</option>                        
                     </select>
                 </div>
             </div>
             <div class="col-6">
                 <div class="form-group">
+                    <label for="cboProductos">Departamento de Ventas</label>
+                    <select onchange="GetProducts();" class="form-control" id="cboDepartamento">
+                        <option value="-1">SELECCIONE</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
                     <label for="cboProductos">Producto</label>
                     <select onchange="getProduct(this);" class="form-control" id="cboProductos">
-                        <option value="0">SELECCIONE</option>
+                        <option value="-1">SELECCIONE</option>
                     </select>
                 </div>
             </div>
@@ -155,6 +166,16 @@
                         </tr>
                     </tfoot>
                 </table>
+            </div>
+        </div>
+    </div>
+    <div id="separe" class="tab-pane">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Valor Total Mínimo Plan Separe </label>
+                    <input id="txtSepare" value="1000000" class="form-control" type="text" placeholder="Valor total mínimo para el plan separe">
+                </div>
             </div>
         </div>
     </div>
