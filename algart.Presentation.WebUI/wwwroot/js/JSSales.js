@@ -191,6 +191,7 @@ function getProduct(item) {
     $("#txtColor").val(prod.Color);
     $("#txtTalla").val(prod.Size);    
     $("#txtInventario").val(prod.Inventory);
+    $("#txtTotal").val(''); 
     $("#txtCantidad").val('');
 
     $("#txtCantidad").focus();

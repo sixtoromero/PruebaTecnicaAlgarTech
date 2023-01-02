@@ -41,7 +41,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "algart.Services.WebAPIRest"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{8E7AE61F-1F7B-4896-9B37-85911370C7D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "algart.Presentation.WebUI", "algart.Presentation.WebUI\algart.Presentation.WebUI.csproj", "{2C92F1C5-E30E-4684-AE2E-B010426CA206}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "algart.Presentation.WebUI", "algart.Presentation.WebUI\algart.Presentation.WebUI.csproj", "{2C92F1C5-E30E-4684-AE2E-B010426CA206}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Artefactos", "Artefactos", "{8FCBB251-6DA8-45DB-8D33-CB05A2D56038}"
+	ProjectSection(SolutionItems) = preProject
+		Artefactos\BDAlgartTech.bak = Artefactos\BDAlgartTech.bak
+		Artefactos\Model Entidad Relacional.png = Artefactos\Model Entidad Relacional.png
+		Artefactos\Script-BDAlgartTech.sql = Artefactos\Script-BDAlgartTech.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{76ADB232-CD04-4EE8-8656-3F9DF54B1FF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +134,8 @@ Global
 		{25860F9B-80CC-4B89-B581-9944D4A7D91C} = {1F27142A-4B24-4BDF-8448-93A2E8AD6DC0}
 		{8E7AE61F-1F7B-4896-9B37-85911370C7D1} = {FE1FE9D2-38C9-4FF5-AF5F-F24DD7F11496}
 		{2C92F1C5-E30E-4684-AE2E-B010426CA206} = {8E7AE61F-1F7B-4896-9B37-85911370C7D1}
+		{8FCBB251-6DA8-45DB-8D33-CB05A2D56038} = {FE1FE9D2-38C9-4FF5-AF5F-F24DD7F11496}
+		{76ADB232-CD04-4EE8-8656-3F9DF54B1FF9} = {8FCBB251-6DA8-45DB-8D33-CB05A2D56038}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0FB9D1C9-6F9A-4222-AB59-77BA14EFE7C1}
