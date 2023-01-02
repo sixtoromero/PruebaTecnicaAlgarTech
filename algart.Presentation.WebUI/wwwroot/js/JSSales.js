@@ -327,8 +327,7 @@ function generateSale() {
         };
         detail.push(items);
     }
-
-    debugger;
+    
     let isPlanSepare = false;
     if (parseInt($("#cboPlanSepare").val()) > 0) {
         isPlanSepare = total >= parseFloat($("#txtSepare").val()) ? true : false;
