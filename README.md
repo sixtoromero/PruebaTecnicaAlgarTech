@@ -15,5 +15,5 @@ Para realizar el ajuste deben hacerlo en el proyecto algart.Services.WebAPIRest 
 Para la ejecución es necesario poner a correr 2 proyectos tal cual como se muestra en la siguiente imagen:
 ![This is an image](https://github.com/sixtoromero/PruebaTecnicaAlgarTech/blob/main/Artefactos/img/Propiedades-solucion.png)
 
-## Video con la demostración
+## Video con la demostración (Click en la imagen por favor)
 [![Alt text](https://img.youtube.com/vi/Rp5Ac0QYFCs/0.jpg)](https://www.youtube.com/watch?v=Rp5Ac0QYFCs)
