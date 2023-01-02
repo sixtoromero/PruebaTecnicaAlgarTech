@@ -16,4 +16,4 @@ Para la ejecución es necesario poner a correr 2 proyectos tal cual como se mues
 ![This is an image](https://github.com/sixtoromero/PruebaTecnicaAlgarTech/blob/main/Artefactos/img/Propiedades-solucion.png)
 
 ## Video con la demostración
-[![Alt text](https://img.youtube.com/vi/3RFAX3CbSGA/0.jpg)](https://www.youtube.com/watch?v=3RFAX3CbSGA)
+[![Alt text](https://img.youtube.com/vi/Rp5Ac0QYFCs/0.jpg)](https://www.youtube.com/watch?v=Rp5Ac0QYFCs)
